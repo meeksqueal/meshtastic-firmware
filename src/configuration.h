@@ -129,6 +129,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SX126X_MAX_POWER 8
 #endif
 
+#ifdef EBYTE_E22P_868M30S
+// Power Amps are often non-linear, so we can use an array of values for the power curve
+// Gain from the Datasheet Graph interpreted with Interpolation by ChatGPT https://www.cdebyte.com/products/E22P-868M30S 
+#define NUM_PA_POINTS 22
+#define TX_GAIN_LORA 22, 22, 21, 21, 21, 21, 21, 21, 21, 20, 19, 18, 18, 17, 16, 15, 15, 14, 13, 12, 11, 10
+#endif
+
+#ifdef EBYTE_E22P_915M30S
+// Power Amps are often non-linear, so we can use an array of values for the power curve
+// Output measured by wehooper4 https://discord.com/channels/867578229534359593/1194757507013427250/1443061086504095876
+#define NUM_PA_POINTS 22
+#define TX_GAIN_LORA 16, 17, 16, 16, 16, 16, 16, 17, 17, 17, 16, 16, 16, 15, 14, 14, 13, 12, 11, 10, 9, 8
+#endif
+
 #ifdef NICERF_MINIF27
 // Note that datasheet power level of 9 corresponds with SX1262 at 22dBm
 // Maximum output power of 29dBm with VCC_PA = 5V
