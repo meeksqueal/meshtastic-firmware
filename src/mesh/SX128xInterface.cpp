@@ -144,8 +144,7 @@ template <typename T> bool SX128xInterface<T>::reconfigure()
     if (err != RADIOLIB_ERR_NONE)
         RECORD_CRITICALERROR(meshtastic_CriticalErrorCode_INVALID_RADIO_SETTING);
 
-    if (power > SX128X_MAX_POWER) // This chip has lower power limits than some
-        power = SX128X_MAX_POWER;
+    limitPower(SX128X_MAX_POWER);
 
     err = lora.setOutputPower(power);
     if (err != RADIOLIB_ERR_NONE)
@@ -154,7 +153,7 @@ template <typename T> bool SX128xInterface<T>::reconfigure()
 
     startReceive(); // restart receiving
 
-    return RADIOLIB_ERR_NONE;
+    return true;
 }
 
 template <typename T> void SX128xInterface<T>::disableInterrupt()
@@ -206,6 +205,7 @@ template <typename T> void SX128xInterface<T>::addReceiveMetadata(meshtastic_Mes
     // LOG_DEBUG("PacketStatus %x", lora.getPacketStatus());
     mp->rx_snr = lora.getSNR();
     mp->rx_rssi = lround(lora.getRSSI());
+    mp->has_rx_rssi = true; // rx_rssi has explicit presence - a genuine reading must be marked present to survive encoding
     LOG_DEBUG("Corrected frequency offset: %f", lora.getFrequencyError());
 }
 
@@ -325,5 +325,11 @@ template <typename T> bool SX128xInterface<T>::sleep()
 #endif
 
     return true;
+}
+
+template <typename T> int16_t SX128xInterface<T>::getCurrentRSSI()
+{
+    float rssi = lora.getRSSI(false);
+    return (int16_t)round(rssi);
 }
 #endif
