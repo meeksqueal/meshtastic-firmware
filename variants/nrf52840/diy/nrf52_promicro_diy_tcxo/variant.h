@@ -139,7 +139,11 @@ NRF52 PRO MICRO PIN ASSIGNMENT
                                  // so it needs connecting externally if it is used in this way
 #define SX126X_BUSY (0 + 29)     // P0.29
 #define SX126X_RESET (0 + 9)     // P0.09
+#if defined(EBYTE_E22P_868M30S) || defined(EBYTE_E22P_915M30S) // E22P modules need RXEN always set to HIGH.
+#define SX126X_ANT_SW (0 + 17)   // P0.17
+#else
 #define SX126X_RXEN (0 + 17)     // P0.17
+#endif
 #define SX126X_TXEN RADIOLIB_NC  // Assuming that DIO2 is connected to TXEN pin. If not, TXEN must be connected.
 
 // LR1121

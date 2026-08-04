@@ -129,6 +129,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SX126X_MAX_POWER 8
 #endif
 
+#ifdef EBYTE_E22P_868M30S
+// #define TX_GAIN_LORA // TODO: find a TX gain value for this module
+#define SX126X_MAX_POWER 22
+#endif
+
+#ifdef EBYTE_E22P_915M30S
+// #define TX_GAIN_LORA // TODO: find a TX gain value for this module
+#define SX126X_MAX_POWER 22
+#endif
+
 #ifdef NICERF_MINIF27
 // Note that datasheet power level of 9 corresponds with SX1262 at 22dBm
 // Maximum output power of 29dBm with VCC_PA = 5V
