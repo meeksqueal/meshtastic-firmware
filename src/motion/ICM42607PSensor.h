@@ -14,13 +14,15 @@ class ICM42607PSensor : public MotionSensor
 {
   private:
     std::unique_ptr<ICM42670> sensor;
-    TwoWire *wire = nullptr;
 
   public:
     explicit ICM42607PSensor(ScanI2C::FoundDevice foundDevice);
     ~ICM42607PSensor() override;
     virtual bool init() override;
     virtual int32_t runOnce() override;
+#ifdef MESHTASTIC_INCLUDE_INKHUD
+    StepSource stepSource() const override { return StepSource::Software; }
+#endif
 };
 
 #endif
